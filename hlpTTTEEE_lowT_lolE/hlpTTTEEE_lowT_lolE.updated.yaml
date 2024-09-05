@@ -1,0 +1,391 @@
+theory:
+  camb:
+    version: 1.4.0
+    path: null
+    speed: 0.3
+    stop_at_error: false
+    extra_args:
+      lens_potential_accuracy: 1
+    ignore_obsolete: false
+    use_renames: false
+    external_primordial_pk: false
+    renames:
+      omegabh2: ombh2
+      omegach2: omch2
+      omegal: omega_de
+      omegak: omk
+      yhe: YHe
+      yheused: YHe
+      YpBBN: Y_p
+    input_params:
+    - As
+    - ns
+    - cosmomc_theta
+    - omegabh2
+    - omegach2
+    - tau
+    output_params:
+    - thetastar
+    - H0
+    - sigma8
+likelihood:
+  planck_2018_lowl.TT:
+    lmin: 2
+    lmax: 29
+    type: CMB
+    aliases:
+    - lowT
+    speed: -1
+    stop_at_error: false
+    version: null
+    input_params:
+    - A_planck
+    output_params: []
+  planck_2020_lollipop.lowlE:
+    data_folder: planck_2020/lollipop
+    cl_file: cl_lolEB_NPIPE.dat
+    fiducial_file: fiducial_lolEB_planck2018_tensor_lensedCls.dat
+    cl_cov_file: clcov_lolEB_NPIPE.fits
+    hartlap_factor: false
+    marginalised_over_covariance: true
+    Nsim: 400
+    lmin: 2
+    lmax: 30
+    type: []
+    speed: -1
+    stop_at_error: false
+    version: null
+    input_params:
+    - A_planck
+    output_params: []
+  planck_2020_hillipop.TTTEEE:
+    data_folder: planck_2020/hillipop
+    multipoles_range_file: data/binning_v4.2.fits
+    xspectra_basename: data/dl_PR4_v4.2
+    covariance_matrix_file: data/invfll_PR4_v4.2_TTTEEE.fits
+    foregrounds:
+      TT:
+        dust_model: foregrounds/DUST_Planck_PR4_model_v4.2
+        tsz: foregrounds/SZ_Planck_PR4_model.txt
+        ksz: foregrounds/kSZ_Planck_PR4_model.txt
+        cib: foregrounds/CIB_Planck_PR4_model.txt
+        szxcib: foregrounds/SZxCIB_Planck_PR4_model.txt
+        ps_radio: null
+        ps_dusty: null
+      EE:
+        dust_model: foregrounds/DUST_Planck_PR4_model_v4.2
+      TE:
+        dust_model: foregrounds/DUST_Planck_PR4_model_v4.2
+    type: []
+    speed: -1
+    stop_at_error: false
+    version: null
+    input_params:
+    - A_planck
+    - cal100A
+    - cal100B
+    - cal143A
+    - cal143B
+    - cal217A
+    - cal217B
+    - pe100A
+    - pe100B
+    - pe143A
+    - pe143B
+    - pe217A
+    - pe217B
+    - Aradio
+    - beta_radio
+    - Adusty
+    - beta_dusty
+    - AdustT
+    - beta_dustT
+    - AsyncT
+    - Acib
+    - beta_cib
+    - Atsz
+    - Aksz
+    - xi
+    - AdustP
+    - beta_dustP
+    - AsyncP
+    output_params: []
+params:
+  cosmomc_theta:
+    prior:
+      min: 0.0103
+      max: 0.0105
+    proposal: 1.5e-06
+    ref: 0.0104
+  logA:
+    prior:
+      min: 2.6
+      max: 3.5
+    proposal: 0.0036
+    ref: 3.044
+  As:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+    latex: A_\mathrm{s}
+    derived: true
+  ns:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref: 0.9649
+    proposal: 0.0033
+  omegabh2:
+    prior:
+      min: 0.017
+      max: 0.027
+    ref: 0.02237
+    proposal: 6.5e-05
+    renames:
+    - ombh2
+  omegach2:
+    prior:
+      min: 0.09
+      max: 0.15
+    ref: 0.12
+    proposal: 0.0011
+    renames:
+    - omch2
+  tau:
+    prior:
+      min: 0.01
+      max: 0.15
+    ref: 0.055
+    proposal: 0.007
+  thetastar:
+    derived: true
+  H0:
+    derived: true
+  sigma8:
+    derived: true
+  A_planck:
+    prior:
+      dist: norm
+      loc: 1
+      scale: 0.0025
+    ref:
+      dist: norm
+      loc: 1
+      scale: 0.002
+    proposal: 0.0005
+    latex: y_\mathrm{cal}
+    renames: calPlanck
+  cal100A:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref: 1.0
+    proposal: 0.005
+    latex: c_\mathrm{100A}
+  cal100B:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref: 1.0
+    proposal: 0.005
+    latex: c_\mathrm{100B}
+  cal143A:
+    value: 1.0
+    latex: c_\mathrm{143A}
+  cal143B:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref: 1.0
+    proposal: 0.005
+    latex: c_\mathrm{143B}
+  cal217A:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref: 1.0
+    proposal: 0.005
+    latex: c_\mathrm{217A}
+  cal217B:
+    prior:
+      min: 0.9
+      max: 1.1
+    ref: 1.0
+    proposal: 0.005
+    latex: c_\mathrm{217B}
+  pe100A:
+    value: 1.0
+    latex: \eta_\mathrm{100A}
+  pe100B:
+    value: 1.0
+    latex: \eta_\mathrm{100B}
+  pe143A:
+    value: 1.0
+    latex: \eta_\mathrm{143A}
+  pe143B:
+    value: 1.0
+    latex: \eta_\mathrm{143B}
+  pe217A:
+    value: 0.975
+    latex: \eta_\mathrm{217A}
+  pe217B:
+    value: 0.975
+    latex: \eta_\mathrm{217B}
+  Aradio:
+    prior:
+      min: 0.0
+      max: 150.0
+    ref: 60.0
+    proposal: 1.0
+    latex: A_\mathrm{radio}^\mathrm{PS}
+  beta_radio:
+    value: -0.8
+    latex: \beta_\mathrm{radio}^\mathrm{PS}
+  Adusty:
+    prior:
+      min: 0.0
+      max: 100.0
+    ref: 6.0
+    proposal: 1.0
+    latex: A_\mathrm{IR}^\mathrm{PS}
+  beta_dusty:
+    value: 'lambda beta_cib: beta_cib'
+    latex: \beta_\mathrm{IR}^\mathrm{PS}
+    derived: true
+  AdustT:
+    prior:
+      dist: norm
+      loc: 1.0
+      scale: 0.1
+    ref: 1.0
+    proposal: 0.02
+    latex: A_\mathrm{dustT}
+  beta_dustT:
+    prior:
+      dist: norm
+      loc: 1.51
+      scale: 0.01
+    ref: 1.51
+    proposal: 0.01
+    latex: \beta_\mathrm{dustT}
+  AsyncT:
+    value: 0.0
+    latex: A_\mathrm{syncT}
+  Acib:
+    prior:
+      min: 0.0
+      max: 20.0
+    ref: 4.0
+    proposal: 1
+    latex: A_\mathrm{CIB}
+  beta_cib:
+    prior:
+      dist: norm
+      loc: 1.75
+      scale: 0.06
+    ref: 1.75
+    proposal: 0.05
+    latex: \beta_\mathrm{CIB}
+  Atsz:
+    prior:
+      min: 0.0
+      max: 50.0
+    ref: 3.0
+    proposal: 1
+    latex: A_\mathrm{tSZ}
+  Aksz:
+    prior:
+      min: 0
+      max: 50
+    ref: 1.0
+    proposal: 1
+    latex: A_\mathrm{kSZ}
+  xi:
+    prior:
+      min: -1.0
+      max: 1.0
+    ref: 0.1
+    proposal: 0.1
+    latex: \xi_\mathrm{SZxCIB}
+  AdustP:
+    prior:
+      dist: norm
+      loc: 1.0
+      scale: 0.1
+    ref: 1.0
+    proposal: 0.02
+    latex: A_\mathrm{dustP}
+  beta_dustP:
+    prior:
+      dist: norm
+      loc: 1.59
+      scale: 0.02
+    ref: 1.59
+    proposal: 0.01
+    latex: \beta_\mathrm{dustP}
+  AsyncP:
+    value: 0.0
+    latex: A_\mathrm{syncP}
+  chi2__CMB:
+    latex: \chi^2_\mathrm{CMB}
+    derived: true
+sampler:
+  mcmc:
+    burn_in: 0
+    max_tries: 40d
+    covmat: /sps/planck/Users/tristram/Planck/Planck2020/V4.2/software/hillipop/examples/LCDM_hlpTTTEEE_camb.cov
+    covmat_params: null
+    proposal_scale: 2.4
+    output_every: 60s
+    learn_every: 40d
+    temperature: 1
+    learn_proposal: true
+    learn_proposal_Rminus1_max: 2.0
+    learn_proposal_Rminus1_max_early: 30.0
+    learn_proposal_Rminus1_min: 0.0
+    max_samples: .inf
+    Rminus1_stop: 0.01
+    Rminus1_cl_stop: 0.2
+    Rminus1_cl_level: 0.95
+    Rminus1_single_split: 4
+    measure_speeds: true
+    oversample_power: 0.4
+    oversample_thin: true
+    drag: false
+    blocking:
+    - - 1
+      - - cosmomc_theta
+        - omegabh2
+        - omegach2
+        - tau
+    - - 1
+      - - logA
+        - ns
+    - - 1
+      - - A_planck
+    - - 1
+      - - cal100A
+        - cal100B
+        - cal143B
+        - cal217A
+        - cal217B
+        - Aradio
+        - Adusty
+        - AdustT
+        - beta_dustT
+        - Acib
+        - beta_cib
+        - Atsz
+        - Aksz
+        - xi
+        - AdustP
+        - beta_dustP
+    callback_function: null
+    callback_every: null
+    seed: null
+    check_every: null
+    oversample: null
+    drag_limits: null
+    fallback_covmat_scale: 4
+    version: 3.3.1
+output: mcmc.4
+packages_path: /sps/planck/Users/tristram/Planck/Planck2020/V4.2/modules
+version: 3.3.1
